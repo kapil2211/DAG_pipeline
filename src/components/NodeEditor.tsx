@@ -16,14 +16,15 @@ const NodeEditor: React.FC<NodeEditorProps> = ({ onAddNode }) => {
   };
 
   return (
-    <div style={{ marginBottom: '5rem' }}>
+    <div style={{ marginBottom: '2rem' }}>
       <input
-        type="text"
+        type="number"
         value={label}
         onChange={(e) => setLabel(e.target.value)}
         placeholder="Enter node label"
+        style={{padding:"1rem" , borderColor:"blue", borderRadius:"2rem" ,marginRight:"1rem" }}
       />
-      <button onClick={handleSubmit}>Add Node</button>
+      <button onClick={handleSubmit} style={{padding:"1rem" , textDecoration:"white",borderColor:"black", backgroundColor:"aliceblue", borderRadius:"2rem" ,marginRight:"1rem", }} >Add Node</button>
       
     </div>
   );

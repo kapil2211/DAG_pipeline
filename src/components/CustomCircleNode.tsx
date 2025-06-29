@@ -15,7 +15,7 @@ const CustomCircleNode: React.FC<NodeProps> = ({ data }) => {
         color: '#fff',
         fontSize: 12,
         position: 'relative',
-        cursor: 'default', // ensures black arrow cursor
+        cursor: 'default', 
       }}
     >
       {/* Input connection (left side) */}

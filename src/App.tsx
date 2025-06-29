@@ -3,7 +3,6 @@ import DAGCanvas from './components/DAGCanvas';
 import NodeEditor from './components/NodeEditor';
 import DAGValidator from './components/DAGValidator';
 import { ReactFlowProvider, useReactFlow } from 'reactflow';
-import { getAutoLayoutedElements } from './utils/layout'; // or inline
 
 import {
   Node as FlowNode,       // Rename to avoid conflict with DOM's built-in Node
@@ -21,24 +20,22 @@ import MiniJsonPreview from './components/MiniJsonPreview';
 
 
 function App() {
+  
 
+  
+  // lets move in a flow 
 
-
-  // State to store the graph nodes and edges
+// first task -->add node
+// first step --> State to store the graph nodes and edges       
+// as reactflow requires some nodes , edges --> for that i created array and for handling them using useState hook 
+  
   const [nodes, setNodes] = useState<FlowNode[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
 
-
-
-  // State to manage right-click context menu
-  const [contextMenu, setContextMenu] = useState<{
-    x: number;
-    y: number;
-    targetId: string;
-    type: 'node' | 'edge';
-  } | null>(null);
-
   // Function to add a new node with a unique ID and random position
+// 2nd  step-->  i created add label button and  its onhandleclick logic 
+// which create a newNode and add it to FlowNode array with all its prevNodes;
+
   const handleAddNode = (label: string) => {
     const newNode: FlowNode = {
       id: crypto.randomUUID(),
@@ -52,6 +49,8 @@ function App() {
     setNodes((prev) => [...prev, newNode]);
   };
 
+// 2nd task---> handle connection
+//after that in order to select, drag and remove nodes and edges you need to implement an onNodesChange and an onEdgesChange handler 
   // Handle changes to node positions, dragging, selection, etc.
   const onNodesChange = useCallback((changes: NodeChange[]) => {
     setNodes((nds) => applyNodeChanges(changes, nds));
@@ -68,6 +67,7 @@ function App() {
       alert("❌ Self-loop is not allowed.");
       return;
     }
+   
     setEdges((eds) =>
       addEdge(
         {
@@ -76,27 +76,26 @@ function App() {
           markerEnd: {
             type: MarkerType.ArrowClosed,
           },
-          style: { stroke: '#007bff', strokeWidth: 2 },
+          style: { stroke: '#007bff', strokeWidth: 3 },
         },
         eds
       )
     );
   }, []);
 
-  // Keyboard & outside click events to close context menu
-  useEffect(() => {
-    const handleClick = () => setContextMenu(null);
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setContextMenu(null);
-    };
-    window.addEventListener('click', handleClick);
-    window.addEventListener('keydown', handleEsc);
-    return () => {
-      window.removeEventListener('click', handleClick);
-      window.removeEventListener('keydown', handleEsc);
-    };
-  }, []);
 
+
+
+// 3rd task --> delete key
+    // State to manage right-click context menu
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    targetId: string;
+    type: 'node' | 'edge';
+  } | null>(null);
+
+  
   // Right-click on a node to show context menu
   const handleNodeContextMenu = (event: React.MouseEvent, node: FlowNode) => {
     event.preventDefault();
@@ -131,12 +130,27 @@ function App() {
     return () => window.removeEventListener('keydown', handleDelete);
   }, []);
 
+  // Keyboard & outside click events to close context menu
+  useEffect(() => {
+    const handleClick = () => setContextMenu(null);
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setContextMenu(null);
+    };
+    window.addEventListener('click', handleClick);
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('click', handleClick);
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
+
   return (
-    <div style={{ padding: '1rem' }}>
-      <h1 style={{ textAlign: 'center', color: 'blue' }}>DAG Pipeline Builder</h1>
+    <div style={{ padding: '1rem'}}>
+      <h1 style={{ textAlign: 'center', color: 'skyblue-900' }}>DAG Pipeline Builder</h1>
 
       {/* Node input form */}
-      <NodeEditor onAddNode={handleAddNode} />
+       <NodeEditor onAddNode={handleAddNode} />
 
 
       {/* DAG canvas with nodes, edges, and interaction handlers */}
@@ -152,8 +166,9 @@ function App() {
           onEdgeContextMenu={handleEdgeContextMenu}
         />
       </ReactFlowProvider>
+     
 
-      {/* Live DAG validity status */}
+      {/* Live DAG validity status for that we require node and edges array to Check DAG*/}
       <DAGValidator nodes={nodes} edges={edges} />
 
       <MiniJsonPreview nodes={nodes} edges={edges} />

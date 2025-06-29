@@ -6,16 +6,24 @@ type Props = {
   edges: Edge[];
 };
 
+// to check DAG we are using Kahn's algorithm (BFS approach)
+
 function validateDAG(nodes: FlowNode[], edges: Edge[]): boolean {
+  // if there are less than 2 nodes then Invalid
   if (nodes.length < 2) return false;
 
+  // creating adjacency list for nodes and its neighbour --> map with node-> array
   const adjacency: Record<string, string[]> = {};
   nodes.forEach((node) => (adjacency[node.id] = []));
 
+  // creating a array for storing how many nodes ended on particular node(node->single number)
   const inDegree: Record<string, number> = {};
   nodes.forEach((node) => (inDegree[node.id] = 0));
 
+  // traversing a edges array
   for (const edge of edges) {
+    // if edge contain {id , source ,target}
+
     if (edge.source === edge.target) return false; // Self-loop check
     adjacency[edge.source].push(edge.target);
     inDegree[edge.target]++;
@@ -47,7 +55,7 @@ const DAGValidator: React.FC<Props> = ({ nodes, edges }) => {
   const isValid = validateDAG(nodes, edges);
 
   return (
-    <div style={{ padding: '10px', color: isValid ? 'green' : 'red' }}>
+    <div style={{ display: 'flex', justifyContent: "center", backgroundColor: "aliceblue", padding: '10px', marginTop: "5rem", width: "50vw", border: "2px solid skyblue", fontWeight: "bolder", color: isValid ? 'green' : 'red' }}>
       DAG Status: {isValid ? '✅ Valid DAG' : '❌ Invalid DAG'}
     </div>
   );

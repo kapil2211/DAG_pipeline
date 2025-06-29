@@ -9,6 +9,8 @@ import ReactFlow, {
   EdgeChange,
   Connection,
   Position,
+  MiniMap,
+  BackgroundVariant
 } from 'reactflow';
 import dagre from 'dagre';
 import CustomCircleNode from './CustomCircleNode';
@@ -41,7 +43,7 @@ const DAGCanvas: React.FC<Props> = ({
   setNodes,
 }) => {
   const { fitView } = useReactFlow();
-
+// its is about dagre
   const handleAutoLayout = () => {
     const dagreGraph = new dagre.graphlib.Graph();
     dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -73,10 +75,11 @@ const DAGCanvas: React.FC<Props> = ({
 
   return (
     <>
-      <button onClick={handleAutoLayout} style={{ marginBottom: '10px' }}>
-        🔀 Auto Layout
-      </button>
-      <div style={{ height: '600px', border: '1px solid #ccc' }}>
+{/* this is basic button which handles auto layout logic */}
+     
+      {/* this is basically normal ReactFlow library which allows to draw a interactive node editor */}
+    {/*all details what the props are go to app.tsx */}
+      <div style={{ height: '500px', border: '4px solid', backgroundColor:"aliceblue" }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -88,9 +91,16 @@ const DAGCanvas: React.FC<Props> = ({
           fitView
           nodeTypes={nodeTypes}
         >
-          <Background />
+          {/* this handles how your ediotr backgorund looks like bydefault it contains dot u can use cross also */}
+          <Background  variant={BackgroundVariant.Dots}/>
+          {/* this enables some zoom in zoom out controls at bottom-left of editor */}
           <Controls />
+          {/* this shows the small map on right-bottom of editor  */}
+          <MiniMap style={{border:"2px solid", backgroundColor:"skyblue"}}/>
         </ReactFlow>
+
+         <button onClick={handleAutoLayout} style={{ marginTop: '1rem', padding:"1rem",  borderRadius:"2rem", backgroundColor: "teal", fontSize:"15px",fontWeight:"bolder"}}>  Auto Layout </button>
+
       </div>
     </>
   );
