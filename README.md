@@ -57,21 +57,13 @@ npm run dev   # or npm start if not using Vite
 
 #### 📹 Screen Recording
 
-[![Watch Demo on YouTube](https://img.youtube.com/vi/your_video_id/0.jpg)](https://youtu.be/your_video_id)
+[vedio Explanation ]https://www.veed.io/view/cb1eadcc-a871-46e7-aa65-620cbcea65f7?panel=share
 
 ---
 
 ### 🚧 Challenges Faced
 
-#### 1. **Preventing Invalid Edges**
 
-* Challenge: Disallow connections like source → source or target → target.
-* Solution: Used `sourceHandle` and `targetHandle` checks inside `onConnect`.
-
-#### 2. **DAG Validation**
-
-* Challenge: Detecting cycles in a user-generated graph.
-* Solution: Implemented **DFS-based cycle detection** every time nodes/edges change.
 
 #### 3. **Dynamic Node Addition**
 
@@ -85,8 +77,8 @@ npm run dev   # or npm start if not using Vite
 
 #### 5. **Edge Rendering Issues**
 
-* Challenge: Rendering clean, directional edges with arrows.
-* Solution: Used `markerEnd` and customized `edgeStyles`.
+* Challenge: Dagre Implementation (As license is required for accessing it on React Flow).
+* Solution: Took the help of Tutorial and AI tools to understand its implementation.
 
 ---
 
@@ -98,11 +90,3 @@ npm run dev   # or npm start if not using Vite
 * [React Context Menus](https://blog.logrocket.com/creating-custom-right-click-menus-react/)
 
 ---
-
-### 🚀 Future Improvements
-
-* Save/load graph to/from local storage or backend
-* Drag-to-create nodes from palette
-* Multiple node types with custom rendering
-* Export DAG as JSON or PNG
-* Keyboard shortcuts and undo-redo functionality
